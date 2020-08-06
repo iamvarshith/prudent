@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+
+    <meta charset="utf-8">
+    <meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="noindex" name="robots">
+    <title>Covid-19 test Prudent</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="icon"
+          type="image/png"
+          href="/static/favicon/favicon-16x16.png">
+    <link rel="icon"
+          type="image/png"
+          href="/static/favicon/favicon-32x32.png">
+    <link rel="icon"
+          type="image/png"
+          href="/static/favicon/android-chrome-192x192.png">
+    <link rel="icon"
+          type="image/png"
+          href="/static/favicon/apple-touch-icon.png">
+
+
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="/static/home_style.css">
+    <link href="/static/1.css" media="screen" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+<header role="header">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                            data-target=".navbar-collapse" role="button">
+                        <span class="sr-only">Toggle Navigation</span>
+
+                        <span class="icon-bar"></span>
+
+                        <span class="icon-bar"></span>
+
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <img class="navbar-brand" src="/static/prudent_logo.png">
+                </div>
+
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right js-nav">
+                        <li><a href='{{ url_for("home") }}'>Home</a></li>
+
+                        <li><a href="{{ url_for("about") }}">About Us</a></li>
+
+                        <li><a href="{{ url_for("test") }}">COVID-19 Test</a></li>
+
+
+                        <li><a href="{{ url_for('equipment') }}">Equipment</a></li>
+
+                        <li><a href="{{ url_for("contact") }}">Contact Us</a></li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+
+<div class="width33 sticky">
+   {# <img src="/static/logo.png">#}
+    <div class="prudent_info">
+        <div class="form_title">
+            <h5>COVID-19 Test</h5>
+            <h6>Please fill the below details to book an appointment:</h6>
+
+        </div>
+
+
+        <div class="form_radio_btns" id="radio_location">
+
+            <div class="radio_btns">
+                <div class="select_option">
+                    <label><input class="rbEnquiry_Comp" name="radios_option" type="radio" value="1"><span
+                            class="outside"><span class="inside"></span></span>Hyderabad</label>
+                </div>
+                <div class="select_option">
+                    <label><input class="rbEnquiry_My" name="radios_option" type="radio" value="1"><span
+                            class="outside"><span class="inside"></span></span>Other Locations</label>
+                </div>
+            </div>
+        </div>
+        <div id="c_form">
+            <div class="input_container">
+                <input class="floatlabel" id="txtName" onkeypress="return isCharKey(event);" type="text"/>
+                <label for="txtName">Name</label>
+            </div>
+            <div class="input_container" style="width: 96%;">
+
+                <input class="floatlabel" id="address" type="text">
+
+                <label for="address">Address</label>
+                <a style="position: relative; margin-left:100%; bottom: 15px;  width: 25px" onclick="getLocation()"><img style="position: absolute;bottom: 1px;  width: 25px;" src="data:image/png;base64,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"></a>
+
+            </div>
+
+            <div class="input_container">
+                <input class="floatlabel" id="landmark" type="text">
+                <label for="landmark">Landmark</label>
+            </div>
+            <div class="input_container">
+                <input class="floatlabel" id="pincode" onkeypress="return isNumberKey(event);" type="text"/>
+                <label for="pincode">Pincode</label>
+            </div>
+            <div class="input_container select_field">
+                <select class="floatlabel" id="test_type">
+                    <option value=""></option>
+                    <option value="Anti-DARS(antibody)">Anti-DARS(antibody)</option>
+                    <option value="RT-PCR">RT-PCR</option>
+                    <option value="COV-2 IGG">COV-2 IGG</option>
+
+                </select>
+                <label for="companyRole">Testing Type</label>
+            </div>
+            <div class="input_container select_field">
+                <select class="floatlabel" id="no_ofpatients">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10 & Above">10 & Above</option>
+                </select>
+                <label for="no_ofpatients">Number of Patients</label>
+            </div>
+
+            <div class="input_container">
+                <input class="floatlabel" id="flatpickr" type="text"/>
+                <label for="flatpickr">Date of Appointment</label>
+
+            </div>
+
+
+            <div class="form_btn" id="btnOTP">
+                <button id="btnsubmit" onclick="return lol()">Submit</button>
+            </div>
+            <div class="error_msg" id="errorName"></div>
+
+        </div>
+        <div id="Enq_My" style="display: none;">
+            <p>Our sincere apologies, currently we are constrained to serving individual requirements in Hyderabad and Secundrabad regions only. Please feel
+                free to <a href="#contact" style="font-weight: bolder">Contact Us</a>. We always appreciate your support.</p>
+
+        </div>
+        </div></div>
+
+
+
+<div class="text_ppe">
+    <h2>Protective Equipments For COVID Patients</h2>
+</div>
+<ul class="cards">
+
+    <li class="cards__item">
+        <div class="card">
+            <div class="card__image card__image--1"></div>
+            <div class="card__content">
+                <div class="card__title">CPAP Machines</div>
+                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                    necessary. It accepts a
+                    unitless value that serves as a proportion. It dictates what amount of the available space inside
+                    the flex container the item should take up.</p>
+                    <center>Contact us</center>
+                </a>
+            </div>
+        </div>
+    </li>
+    <li class="cards__item">
+        <div class="card">
+            <div class="card__image card__image--2"></div>
+            <div class="card__content">
+                <div class="card__title">Air Beds</div>
+                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                    necessary. It accepts a
+                    unitless value that serves as a proportion. It dictates what amount of the available space inside
+                    the flex container the item should take up.</p>
+                    <center>Contact us</center>
+                </a>
+            </div>
+        </div>
+    </li>
+    <li class="cards__item">
+        <div class="card">
+            <div class="card__image card__image--3"></div>
+            <div class="card__content">
+                <div class="card__title">Medical Oxygen Concentrator</div>
+                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                    necessary. It accepts a
+                    unitless value that serves as a proportion. It dictates what amount of the available space inside
+                    the flex container the item should take up.</p>
+                    <center>Contact us</center>
+                </a>
+            </div>
+        </div>
+    </li>
+    <li class="cards__item">
+        <div class="card">
+            <div class="card__image card__image--4"></div>
+            <div class="card__content">
+                <div class="card__title">Hand Held Pulse Oximeter</div>
+                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                    necessary. It accepts a
+                    unitless value that serves as a proportion. It dictates what amount of the available space inside
+                    the flex container the item should take up.</p>
+                    <center>Contact us</center>
+                </a>
+            </div>
+        </div>
+    </li>
+    <li class="cards__item">
+        <div class="card">
+            <div class="card__image card__image--5"></div>
+            <div class="card__content">
+                <div class="card__title">Nebulizer</div>
+                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                    necessary. It accepts a
+                    unitless value that serves as a proportion. It dictates what amount of the available space inside
+                    the flex container the item should take up.</p>
+                    <center>Contact us</center>
+                </a>
+            </div>
+        </div>
+    </li>
+    <li class="cards__item">
+        <div class="card">
+            <div class="card__image card__image--6"></div>
+            <div class="card__content">
+                <div class="card__title">Pluse Oximeter</div>
+                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                    necessary. It accepts a
+                    unitless value that serves as a proportion. It dictates what amount of the available space inside
+                    the flex container the item should take up.</p>
+                    <center>Contact us</center>
+                </a>
+            </div>
+        </div>
+    </li>
+    <li class="cards__item">
+        <div class="card">
+            <div class="card__image card__image--7"></div>
+            <div class="card__content">
+                <div class="card__title">BIPAP</div>
+                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                    necessary. It accepts a
+                    unitless value that serves as a proportion. It dictates what amount of the available space inside
+                    the flex container the item should take up.</p>
+                    <center>Contact us</center>
+                </a>
+            </div>
+        </div>
+    </li>
+    <li class="cards__item">
+        <div class="card">
+            <div class="card__image card__image--8"></div>
+            <div class="card__content">
+                <div class="card__title">Flex Basis</div>
+                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                    necessary. It accepts a
+                    unitless value that serves as a proportion. It dictates what amount of the available space inside
+                    the flex container the item should take up.</p>
+                    <center>Contact us</center>
+                </a>
+            </div>
+        </div>
+    </li>
+</ul>
+
+
+<footer>
+    <div class="flex">
+        <div class="width66">
+
+            <div class="flex mobileFlex" id='test'>
+                <div class="width80 mobileWidth80">
+                    <div class="footer_content" id='contact'>
+                        <h2>Contact Us </h2>
+                        <h6>+ 91 89774 41288</h6>
+                    </div>
+                    <div class="footer_social">
+                        <span>
+                            <img alt=""
+                                 height="1"
+                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAMAAAAMCGV4AAAAS1BMVEUAAAAiHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx8iHx/Hhdu6AAAAGHRSTlMA+PP879i5Xi6ySuLNycO9ZCW2d1AcDnI3dYE5AAAAdklEQVQI112PSQ5DMQhDTSDjn4e2vv9JSxvpL2JYICHsB37KW2DYMrqOSKopGQ+4SuCpFz56MhQAM+ttGdnuyhnYyckoXjaROxIblhVvrAsaE4QFMeGFFFEo8CRSRL3p87gf77u/Pv7//Pbkd77qfFfnG/nH/772lQhdCCU3kgAAAABJRU5ErkJggg=="
+                                 width="15"/> <a href="www.prudenthealth.in/"
+                                                 target="_blank">www.prudenthealth.in</a>
+                        </span>
+                        <span>
+                            <img alt=""
+                                 height="14"
+                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAMAAAAYGszCAAAAYFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD6T+iNAAAAH3RSTlMAe/jQhoAh8+6VbVMK597BraScdXRxYF1NQz88KhEB9TGg/AAAAIlJREFUGNNt0EkSgjAARNE2MQkiyjwP//631AIVKf3Lt+mq1oWfLoK4dadPro1BgUKHCoKMNWHaaQpPEHESuL7tiklixFlJitvMkSY6r6gBskVaMhj0Qo+tuM/zncriVyx1w6sH6OW5qUS4nFGSt9ZLGskditi2930iGTod6jAiaurTV3UT8feQByVhDnBOougRAAAAAElFTkSuQmCC"
+                                 width="20"/> <a href="mailto:info@prudenthealth.in"
+                                                 target="_blank">info@prudenthealth.in</a>
+                        </span>
+                        <span>|</span>
+                        <span>
+                            Follow on
+
+
+                            <a href="https://www.linkedin.com/company/'yourlinkedin'/" target="_blank"><img
+                                    alt="LinkedIn"
+                                    height="20"
+                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAY1BMVEUhHx8AAAAhHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx/C/mq5AAAAIHRSTlPLAM9d9/Hh5B9219TCp4xHNBru64lfT0oWDbmyj4BjJpD+32sAAAB9SURBVBjTldHJDoMwDARQDyQOgdCEpRS6+v+/sr014KhS5/g0By/UM+3T0YVaUTlTpbH+gW3QaAfcdDNupHFyYtnYMGVoEtwd8YWNMmzAM1AnxB26E54S0JgDPqTDag/opcJg8zl5/iBhHb9Nv4zX1Asv3hR3/w+LRy6+4w2wfCFGEwztggAAAABJRU5ErkJggg=="
+                                    width="20"></a>
+
+                            <a href="https://twitter.com/'twitter'" target="_blank"><img
+                                    alt="Twitter"
+                                    height="20"
+                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAdVBMVEUAAAAhHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx/ep6KvAAAAJnRSTlMA+bQbD5iEY1IV7+DWwLetpkspAvTqzqBdWjElCAafkIt+eXhvQ5AmaLgAAACfSURBVBjThdBHEsMgDEBRGdsY94J7SY/uf8SI4gxskr+Ct9BoBP9KH9XUAqwRPb+YFBg0afckrJm1GVVDFocAI152ZfuApnIFYIiFINysZTN9WqRG/l4s1mTHVqJXQyirzMebXgT9BKji3rU+0hhWLsag6wIXQzAtjr7g7OAnTwYkDW2ZN5DkWqAtT8Amu3uZIwY5SyL3toLXrOGC7Fcf6BMbOi3tPk0AAAAASUVORK5CYII="
+                                    width="20"></a>
+
+                            <a href="https://www.instagram.com/'insta'/" target="_blank"><img
+                                    alt="Instagram"
+                                    height="20"
+                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAeFBMVEUAAAAhHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx+AOwQNAAAAJ3RSTlMAwybTXNircyz4o2W536+cixoWCvLnyL+TaUQH7enZ182Gblg0p3zpbdvlAAAAsUlEQVQY023Q2Q6CMBCF4QOitFQ22V0AAT3v/4YOSEAM/03TL5lMMgAcqzksNXkF6cm/whucDZTGHOki3KACPJ7x2kNvg5Uaih/MysjntxH1I9O0bgAC6jTVgie+Ed9pQ7poKhhagh2UvGPyucKZ0MWwh0lGNY/HCyJinkyLQqyYtLyX0YP+ZUXRgFIhNmHACmO2MQqY0WOETR2L8XR9bC/F15Tu/pGBPvfr41zttwb4ADQZHm9DlXfGAAAAAElFTkSuQmCC"
+                                    width="20"></a>
+
+                            <a href="https://www.facebook.com/'fb'/" target="_blank"><img
+                                    alt="Facebook"
+                                    height="20"
+                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAXVBMVEUAAAAhHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx8hHx+nDCtGAAAAHnRSTlMAzd3z5qT799S6q4xRSBMK79jGsqeamIJubGBANCFLkzipAAAAd0lEQVQY063RyQ6FIAwF0GKrgji85zz//2dadWGubL0bkkOTCyll1rxiM5I9iJAJ0QBy7H2fIkYbaX6IOZ1hQK6IqrVAjHTMv4tSRYOYjLniMk/QTndKmCxvLADrVmlwfyxKFJ2ewZPiT1DgR811+6zDOsWORdgdN8YcrOTHcSoAAAAASUVORK5CYII="
+                                    width="20"></a>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</footer>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
+<script src="/static/1.js"></script>
+<script defer src="/static/2.js" type="text/javascript"></script>
+<!-- Render Custom Header Script -->
+<script defer src="/static/3.js" type="text/javascript"></script>
+<script defer src="/static/4.js" type="text/javascript"></script>
+{#
+<script defer type="text/javascript">
+    var cb = function () {
+        var l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = '';
+        var h = document.getElementsByTagName('head')[0];
+        h.parentNode.insertBefore(l, h);
+    };
+    var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+        webkitRequestAnimationFrame || msRequestAnimationFrame;
+    if (raf) raf(cb);
+    else window.addEventListener('load', cb);
+</script>
+#}
+
+
+
+</body>
+</html>

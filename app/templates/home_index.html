@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prudent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="icon"
+          type="image/png"
+          href="/static/favicon/favicon-16x16.png">
+    <link rel="icon"
+          type="image/png"
+          href="/static/favicon/favicon-32x32.png">
+    <link rel="icon"
+          type="image/png"
+          href="/static/favicon/android-chrome-192x192.png">
+    <link rel="icon"
+          type="image/png"
+          href="/static/favicon/apple-touch-icon.png">
+
+
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="/static/home_style.css">
+    <link rel="stylesheet" type="text/css" href="/static/fullpage.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/examples.css"/>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .container_about {
+            height: 100%;
+            top: 10vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto;
+            grid-template-areas:
+                        "centerLeft centerRight";
+
+        }
+
+        .container_contact {
+            height: 100%;
+            top: 10vh;
+            display: grid;
+            flex-wrap: revert;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto;
+            grid-template-areas:
+                        "centerLeft centerRight";
+
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .container_about {
+                display: grid;
+                position: relative;
+                grid-template-columns: 1fr;
+                grid-auto-rows: minmax(20%, 70vmax);
+                grid-template-areas:"centerLeft"
+                            "centerRight";
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container_contact {
+                display: grid;
+
+                position: relative;
+                grid-template-columns: 1fr;
+                grid-auto-rows: minmax(20%, 70vmax);
+                grid-template-areas:"centerLeft"
+                            "centerRight";
+
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- partial:index.partial.html -->
+<div class="wrapper">
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                        data-target=".navbar-collapse" role="button">
+                    <span class="sr-only">Toggle Navigation</span>
+
+                    <span class="icon-bar"></span>
+
+                    <span class="icon-bar"></span>
+
+                    <span class="icon-bar"></span>
+                </button>
+
+                <img class="navbar-brand" src="/static/prudent_logo.png">
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right js-nav">
+                    <li><a href='{{ url_for("home") }}'>Home</a></li>
+
+                    <li><a href="{{ url_for("about") }}">About Us</a></li>
+
+                    <li><a href="{{ url_for("test") }}">COVID-19 Test</a></li>
+
+
+                    <li><a href="{{ url_for('equipment') }}">Equipment</a></li>
+
+                    <li><a href="{{ url_for("contact") }}">Contact Us</a></li>
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="fullpage">
+        <div class="section " id="section0">
+
+            <img src="/static/prudent_logo.png">
+            <br>
+            <h2>Brings COVID test to your homes!</h2>
+            <br><br>
+            <a href="{{ url_for("test") }}" class="transparent_btn orange">COVID-19 Test</a>
+            <a href="{{ url_for("equipment") }}" style="padding: 1vw 3vw;" class="transparent_btn blue"> Equipment</a>
+
+        </div>
+
+
+        <div class="section" id="section1">
+            <div class="container_about">
+                <div class="flex" style="background: #CAE5F1">
+
+                    <div style="text-align: center;color: black"><h2
+                            style="color: black;font-family: Verdana;font-weight:600 ">About Us</h2></div>
+
+                </div>
+                <div class="flex">
+
+
+                    <p style="padding: 5vw">Prudent Healthcare Services Pvt. Ltd.A statutory company incorporated under the Companies Act, 2020, and having its
+                        registered office at 5th Floor, Center Point, Chiran Fort Lane, Begumpet, Secundrabad-500003.
+                        ProCare is planning to build Healthcare Aggregator e-Business Solutions to serve as a one-stop
+                        solution to meet various kinds of needs of the customers. This new e-Business platform is to
+                        offer aggregator services for health checkup packages, outpatient services, doctors
+                        consultations, Home Healthcare Services, Emergency backup support services, Tele Medicine
+                        services, Onsite Health check-up for corporate and inpatient services through various healthcare
+                        service providers whereby users of the website can schedule appointments with such service
+                        providers such as Clinics, Labs, Diagnostic Centers, and Multi-Specialty Tertiary care Hospitals
+                        in India and abroad and consult medical specialists/practitioners online. This platform should
+                        enable Prudent Healthcare to provide an enriched and complete experience to its stakeholders.</p>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="section" id="section2">
+            <div class="container_contact">
+
+                <div class="flex">
+                    <div style="text-align: center;"><h2 style="color: black;font-family: Verdana;font-weight:600 ">
+                        Contact Us</h2>
+                    </div>
+
+                </div>
+                <div class="flex" style="background: #CAE5F1">
+
+
+
+
+                        <div class="contact_info">
+
+                                <i class="lnr lnr-home"></i>
+                                <h2>Hyderabad </h2>
+                                <p>Telangana,500010</p>
+
+
+
+
+
+                                <p>Mon to Fri 9am to 6 pm</p>
+
+
+
+                                <i class="lnr lnr-envelope"></i>
+                                <h6><a href="#">test@gmail.com</a></h6>
+                                <p>Send us your query anytime!</p>
+
+                        </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
+    <script src="/static/home_script.js"></script>
+    <script type="text/javascript" src="/static/fullpage.js"></script>
+    <script type="text/javascript" src="/static/examples.js"></script>
+    <script type="text/javascript">
+        var myFullpage = new fullpage('#fullpage', {
+            sectionsColor: ['#fff', '#fff', '#ffffff'],
+            anchors: ['home', 'about', 'contact'],
+            menu: '#menu',
+            navigation: true,
+
+
+            loopTop: false,
+            loopBottom: true
+        });
+        $('a[href*="#"]')
+            // Remove links that don't actually link to anything
+            .not('[href="#"]')
+            .not('[href="#0"]')
+            .click(function (event) {
+                // On-page links
+                if (
+                    location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+                    &&
+                    location.hostname == this.hostname
+                ) {
+                    // Figure out element to scroll to
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    // Does a scroll target exist?
+                    if (target.length) {
+                        // Only prevent default if animation is actually gonna happen
+                        event.preventDefault();
+                        $('html, body').animate({
+                            scrollTop: target.offset().top
+                        }, 1000, function () {
+                            // Callback after animation
+                            // Must change focus!
+                            var $target = $(target);
+                            $target.focus();
+                            if ($target.is(":focus")) { // Checking if the target was focused
+                                return false;
+                            } else {
+                                $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
+                                $target.focus(); // Set focus again
+                            }
+                        });
+                    }
+                }
+            });
+    </script>
+</div>
+
+</body>
+</html>
