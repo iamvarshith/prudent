@@ -80,6 +80,7 @@ def getotp(otp_entered=None):
 
     return '0'
 
+<<<<<<< HEAD
 @app.route('/resendotp', methods=['POST'])
 def resendotp(otp_entered=None):
     if request.method == 'POST':
@@ -115,6 +116,8 @@ def resendotp(otp_entered=None):
     return '0'
 
 
+=======
+>>>>>>> 81c99877fc9fb81c198c80df11b497c0ece2090e
 
 @app.route('/confirmotp', methods=['POST'])
 def confirmotp():
