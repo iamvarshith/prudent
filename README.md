@@ -10,7 +10,7 @@ Project is created with:
         
 ```
 cd ../prudent
-$pip install -r requirments.txt
+$pip3 install -r requirments.txt
 $python3 run.py
 
 ```
