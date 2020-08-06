@@ -1,3 +1,5 @@
+from pampy import HEAD
+
 from app.models import User
 from flask import Flask, render_template, url_for, flash, redirect, request, jsonify, session
 from app import app, db, login_manager
@@ -80,7 +82,6 @@ def getotp(otp_entered=None):
 
     return '0'
 
-<<<<<<< HEAD
 @app.route('/resendotp', methods=['POST'])
 def resendotp(otp_entered=None):
     if request.method == 'POST':
@@ -116,9 +117,6 @@ def resendotp(otp_entered=None):
     return '0'
 
 
-=======
->>>>>>> 81c99877fc9fb81c198c80df11b497c0ece2090e
-
 @app.route('/confirmotp', methods=['POST'])
 def confirmotp():
     print(session['otp'])
@@ -138,7 +136,6 @@ def confirmotp():
             db.session.add(user)
             db.session.commit()
             login_user(user)
-            print('You no here before')
 
         return jsonify({
             "redirect": 'true',
