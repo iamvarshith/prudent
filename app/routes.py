@@ -145,7 +145,7 @@ def confirmotp():
             "redirect_url": url_for('test')
         })
     else:
-        print('booo')
+
         return '1'
 
 
