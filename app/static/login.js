@@ -15,7 +15,7 @@ function sendotp() {
                 $('#phone').attr('disabled','disabled');
                 $('#email').attr('disabled','disabled');
                 $('#submitform').show()
-                 $("#resendotp").delay(60000).fadeIn();
+                $("#resendotp").delay(30000).fadeIn();
                 $("#errorName").html("OTP has been successfuly sent to your Email ID & Mobile Number").show();
                 $("#errorName").delay(12000).fadeOut()
             } else {
@@ -36,7 +36,7 @@ function resendotp() {
     emailvalidate() && mobilevalidation() &&
     $.ajax({
         type: "POST",
-        url: "/getotp",
+        url: "/resendotp",
         data: {email: $("#email").val().replace("'", ""), mobile: $("#phone").val()},
         async: false,
         cache: !1,
@@ -46,7 +46,7 @@ function resendotp() {
                 $("#errorName").hide()
                 $('#otpcontainer').show()
                 /*$('#phone').hide()*/
-                $('#phone').attr('disabled','disabled');
+                $('#phone').attr('disabled', 'disabled');
                 $('#resendotp').hide()
                 $('#email').attr('disabled','disabled');
                 $('#submitform').show()
