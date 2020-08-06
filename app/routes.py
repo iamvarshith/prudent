@@ -88,7 +88,7 @@ def resendotp(otp_entered=None):
 
         otp = session['otp']
         print(otp)
-        sentotp = str(otp)
+        sendotp = str(otp)
         print(email)
 
         try:
@@ -100,7 +100,7 @@ def resendotp(otp_entered=None):
                                     "subject": "OTP ",
                                     "template": "otp",
 
-                                    "h:X-Mailgun-Variables": json.dumps({"test": sentotp})},
+                                    "h:X-Mailgun-Variables": json.dumps({"test": sendotp})},
                               timeout=1.5
                               )
 
