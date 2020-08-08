@@ -1,17 +1,15 @@
-
-
-from app.models import User
-from flask import Flask, render_template, url_for, flash, redirect, request, jsonify, session
-from app import app, db, login_manager
-
-from flask_login import login_user, current_user, logout_user, login_required
-
-from app.paytm import checksum
-import random
-import requests
-import json
 import hashlib
+import json
+import random
+
+import requests
+from flask import render_template, url_for, redirect, request, jsonify, session
+from flask_login import login_user, current_user, login_required
+
+from app import app, db, login_manager
 from app import final_url
+from app.models import User, TestOrder
+from app.paytm import checksum
 
 
 @login_manager.unauthorized_handler
@@ -53,34 +51,43 @@ def getotp(otp_entered=None):
     if request.method == 'POST':
         email = request.form['email']
         phone = request.form['mobile']
+        token = request.form['token']
         otp = random.randint(100000, 999999)
         session['otp'] = otp
         print(otp)
         sentotp = str(otp)
-        print(email)
 
-        try:
-            r = requests.post("https://api.mailgun.net/v3/wahhealthcare.com/messages",
+        secret = "6LfK6rsZAAAAAPN3Xq_BCGUQxijL0ftfzbXdbAqU"
 
-                              auth=("api", "key-179896d154b2bdb3c6b6d0201268f295"),
-                              data={"from": "Prudent <noreply@wahhealthcare.tech>",
-                                    "to": [email],
-                                    "subject": "OTP ",
-                                    "template": "otp",
+        captcha = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}'.format(secret, token))
 
-                                    "h:X-Mailgun-Variables": json.dumps({"test": sentotp})},
-                              timeout=1.5
-                              )
+        if (captcha.json()['success']) is True and (captcha.json()['score']) >= 0.3:
+            try:
+                if 1 == 1:
+                    # r = requests.post("https://api.mailgun.net/v3/wahhealthcare.com/messages",
+                    #
+                    #                   auth=("api", "key-179896d154b2bdb3c6b6d0201268f295"),
+                    #                   data={"from": "Prudent <noreply@wahhealthcare.tech>",
+                    #                         "to": [email],
+                    #                         "subject": "OTP ",
+                    #                         "template": "otp",
+                    #
+                    #                         "h:X-Mailgun-Variables": json.dumps({"test": sentotp})},
+                    #                   timeout=1.5
+                    #                   )
+                    #
+                    # if r.status_code == 200:
+                    return '1'
 
-            if r.status_code == 200:
-                return '1'
-
-        except requests.Timeout:
+            except requests.Timeout:
+                return '0'
+            except requests.ConnectionError:
+                return '0'
+        else:
             return '0'
-        except requests.ConnectionError:
-            return '0'
-
     return '0'
+
 
 @app.route('/resendotp', methods=['POST'])
 def resendotp(otp_entered=None):
@@ -132,7 +139,7 @@ def confirmotp():
             print('You are this here')
 
         else:
-            user = User(name='null', email=email, phone=phone, payment_txn=0000)
+            user = User(email=email, phone=phone, status='user')
             db.session.add(user)
             db.session.commit()
             login_user(user)
@@ -149,40 +156,25 @@ def confirmotp():
 @app.route('/covid_test', methods=['POST', 'GET'])
 @login_required
 def test():
-    if current_user.status == 'True':
-        details_dict = {
-            'name': current_user.name,
-            'payment_txn': current_user.payment_txn,
-            'status': current_user.status,
-            'address': current_user.address,
-            'landmark': current_user.landmark,
-            'appointment': current_user.Time_date
-
-        }
-        return render_template('details.html')
     return render_template('new_templata.html')
 
 
 @app.route('/contact/userform', methods=['POST'])
 def userform():
     name = str(request.form['name'])
-    address = str(request.form['address'])
-    landmark = str(request.form['landmark'])
-    pincode = str(request.form['pincode'])
+    no_of_test = str(request.form['no_ofpatients'])
     test_type = str(request.form['test_type'])
-    no_ofpatients = str(request.form['no_ofpatients'])
     date = str(request.form['date'])
+    address = str(request.form['address']) + '  ,' + str(request.form['pincode'])
+    landmark = str(request.form['landmark'])
 
     if current_user.is_authenticated:
-        current_user.name = name
-        current_user.type_of_test = test_type
-        current_user.Time_date = date
-
-        current_user.address = address
-        current_user.landmark = landmark + pincode
-        current_user.no_of_patients = no_ofpatients
-
+        test_details = TestOrder(name=name, no_of_test=no_of_test, type_of_test=test_type, appointment=date,
+                                 address=address, landmark=landmark,
+                                 user_id=current_user.id)
+        db.session.add(test_details)
         db.session.commit()
+        test_details.id = session['order_id']
         return jsonify({
             "redirect": 'true',
             "redirect_url": url_for('payu')
@@ -224,7 +216,7 @@ def getlocation():
         landmark = address[2]
     else:
         landmark = address[1]
-    line1 = address[0:1]
+    line1 = address[0:2]
 
     print(pincode)
     print(landmark)
@@ -237,7 +229,8 @@ def getlocation():
 @app.route("/payment")
 @login_required
 def payment():
-    test_type = current_user.type_of_test
+    order = TestOrder.query.filter_by(id=session['order_id'])
+    test_type = order.type_of_test
     if test_type == 'RT-PCR':
         price = 1
     elif test_type == 'Anti-DARS(antibody)':
@@ -252,11 +245,11 @@ def payment():
         'MID': 'GoMEMW82764175165100',
         'ORDER_ID': str(orderid),
         'TXN_AMOUNT': str(txn_amount),
-        'CUST_ID': str(current_user.name),
+        'CUST_ID': str(order.name),
         'INDUSTRY_TYPE_ID': 'Retail',
         'WEBSITE': 'DEFAULT',
         'CHANNEL_ID': 'WEB',
-        'CALLBACK_URL': final_url+'/paytm/handlerequest/',
+        'CALLBACK_URL': final_url + '/paytm/handlerequest/',
 
     }
     param_dict['CHECKSUMHASH'] = checksum.generate_checksum(param_dict, '8Z58wwmtFAOhM1vm')
@@ -289,7 +282,9 @@ def handeler_paytm():
 
 @app.route('/payu', methods=['POST', "GET"])
 def payu():
-    test_type = current_user.type_of_test
+    order = TestOrder.query.filter_by(id=session['order_id']).first()
+    print(order)
+    test_type = order.type_of_test
     if test_type == 'RT-PCR':
         price = 1
     elif test_type == 'Anti-DARS(antibody)':
@@ -297,8 +292,12 @@ def payu():
     else:
         price = 1
 
-    txn_amount = int(current_user.no_of_patients) * price
+    txn_amount = int(order.no_of_test) * price
+    session['amount'] = str(txn_amount)
     txnid = hashlib.md5(str((random.randint(100000, 999999) + current_user.phone)).encode()).hexdigest()
+    order.payment_txn = txnid
+    order.status_txn = 'pending' + '  ,\u20B9' + str(txn_amount)
+    db.session.commit()
 
     hashSequence = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10"
     hash_string = ''
@@ -309,7 +308,7 @@ def payu():
         'txnid': txnid,
         'amount': str(txn_amount),
         'productinfo': str(test_type),
-        'firstname': current_user.name,
+        'firstname': order.name,
         'email': current_user.email,
         'phone': current_user.phone,
         'surl': final_url + '/payu/success',
@@ -329,9 +328,9 @@ def payu():
     param_dict['hash'] = hashh
     return render_template('payu.html', param=param_dict)
 
-
 @app.route('/payu/success', methods=['POST', 'GET'])
 def payu_success():
+    order = TestOrder.query.filter_by(id=session['order_id']).first()
     status = request.form["status"]
     firstname = request.form["firstname"]
     amount = request.form["amount"]
@@ -344,8 +343,8 @@ def payu_success():
     retHashSeq = salt + '|' + status + '|||||||||||' + email + '|' + firstname + '|' + productinfo + '|' + amount + '|' + txnid + '|' + key
     hashh = hashlib.sha512(retHashSeq.encode()).hexdigest().lower()
     if hashh == posted_hash:
-        current_user.payment_txn = request.form['txnid']
-        current_user.status = 'Success'
+        order.status_txn = 'success' + '  ,\u20B9' + session['amount']
+
         db.session.commit()
         pay_status = 1
 
@@ -354,8 +353,9 @@ def payu_success():
 
 @app.route('/payu/gg', methods=['POST', 'GET'])
 def payu_fail():
-    current_user.payment_txn = request.form['txnid']
-    current_user.status = 'Fail'
+    order = TestOrder.query.filter_by(id=session['order_id']).first()
+    order.status_txn = 'fail' + '  ,\u20B9' + str(session['amount'])
+
     db.session.commit()
     pay_status = 0
     return render_template('postpayment.html', status=pay_status, transaction_id=request.form['txnid'])

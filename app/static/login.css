@@ -121,6 +121,7 @@ button:focus{
 input[type="text"],
 input[type="email"],
 input[type="number"],
+input[type="tel"],
 input[type="password"]
  {
     display: block;

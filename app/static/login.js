@@ -1,37 +1,50 @@
-function sendotp() {
-    emailvalidate() && mobilevalidation() &&
-    $.ajax({
-        type: "POST",
-        url: "/getotp",
-        data: {email: $("#email").val().replace("'", ""), mobile: $("#phone").val()},
-        async: false,
-        cache: !1,
-        success: function (e) {
-            if (1 == e) {
-                $('#getotp').hide()
-                $("#errorName").hide()
-                $('#otpcontainer').show()
-                /*$('#phone').hide()*/
-                $('#phone').attr('disabled','disabled');
-                $('#email').attr('disabled','disabled');
-                $('#submitform').show()
-                $("#resendotp").delay(30000).fadeIn();
-                $("#errorName").html("OTP has been successfuly sent to your Email ID & Mobile Number").show();
-                $("#errorName").delay(12000).fadeOut()
-            } else {
-                $("#errorName").html("There is somthing wrong at the moment,").show();
-            }
+function sendotp(token) {
+
+    if (token != null) {
+        emailvalidate() &&
+        mobilevalidation() &&
+        $.ajax({
+            type: "POST",
+            url: "/getotp",
+            data: {
+                email: $("#email").val().replace("'", ""),
+                mobile: $("#phone").val(),
+                token: token,
+
+            },
+            async: false,
+            cache: !1,
+
+            success: function (e) {
+                if (1 == e) {
+                    $('#getotp').hide()
+                    $("#errorName").hide()
+                    $('#otpcontainer').show()
+                    /*$('#phone').hide()*/
+                    $('#phone').attr('disabled', 'disabled');
+                    $('#email').attr('disabled', 'disabled');
+                    $('#submitform').show()
+                    $("#resendotp").delay(30000).fadeIn();
+                    $("#errorName").html("OTP has been successfuly sent to your Email ID & Mobile Number").show();
+                    $("#errorName").delay(12000).fadeOut()
+                } else {
+                    $("#errorName").html("There is somthing wrong at the moment,").show();
+                }
 
 
-        },
-        timeout: 15000,
-    }).fail(function (jqXHR, textStatus, errorThrown) {
-        $("#errorName").html("There is somthing wrong at the moment").show();
+            },
+            timeout: 15000,
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            $("#errorName").html("There is somthing wrong at the moment").show();
 
 
-        console.log(errorThrown);
-    });
+            console.log(errorThrown);
+        });
+    }
+
 }
+
+
 function resendotp() {
     emailvalidate() && mobilevalidation() &&
     $.ajax({
@@ -48,7 +61,7 @@ function resendotp() {
                 /*$('#phone').hide()*/
                 $('#phone').attr('disabled', 'disabled');
                 $('#resendotp').hide()
-                $('#email').attr('disabled','disabled');
+                $('#email').attr('disabled', 'disabled');
                 $('#submitform').show()
                 $("#errorName").html("OTP has been successfuly sent to your Email ID & Mobile Number").show();
                 $("#resendotp").delay(12000).fadeIn();
@@ -66,6 +79,7 @@ function resendotp() {
         console.log(errorThrown);
     });
 }
+
 function submit() {
     emailvalidate() &&
     mobilevalidation() &&
@@ -140,5 +154,5 @@ function otpvalidation() {
     } else
         return true;
 
-}
 
+}

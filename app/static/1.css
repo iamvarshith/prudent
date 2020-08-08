@@ -62,6 +62,7 @@ html {
     text-align: center;
     margin-left: 50%;
     top: 8vh;
+    padding: 25px;
     margin-right: 1vw;
     font-weight: 600;
     font-size: 1em;
@@ -643,7 +644,7 @@ header img {
     overflow-x: hidden;
 
     font-family: verdana;
-    z-index: 9999;
+    z-index: 99;
     background: #fff;
     width: 40%;
     margin-right: 2vw;
