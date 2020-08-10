@@ -10,7 +10,7 @@
     <title>Covid-19 test Prudent</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="icon"
           type="image/png"
           href="/static/favicon/favicon-16x16.png">
@@ -35,47 +35,46 @@
 </head>
 <body>
 <header role="header">
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
-                            data-target=".navbar-collapse" role="button">
-                        <span class="sr-only">Toggle Navigation</span>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                        data-target=".navbar-collapse" role="button">
+                    <span class="sr-only">Toggle Navigation</span>
 
-                        <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
 
-                        <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
 
-                        <span class="icon-bar"></span>
-                    </button>
+                    <span class="icon-bar"></span>
+                </button>
 
-                    <img class="navbar-brand" src="/static/prudent_logo.png">
-                </div>
-
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right js-nav">
-                        <li><a href='{{ url_for("home") }}'>Home</a></li>
-
-                        <li><a href="{{ url_for("about") }}">About Us</a></li>
-
-                        <li><a href="{{ url_for("test") }}">COVID-19 Test</a></li>
-
-
-                        <li><a href="{{ url_for('equipment') }}">Equipment</a></li>
-
-                        <li><a href="{{ url_for("contact") }}">Contact Us</a></li>
-
-
-                    </ul>
-                </div>
+                <img class="navbar-brand" src="/static/prudent_logo.png">
             </div>
-        </nav>
-    </header>
 
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right js-nav">
+                    <li><a href='{{ url_for("home") }}'>Home</a></li>
+
+                    <li><a href="{{ url_for("about") }}">About Us</a></li>
+
+                    <li><a href="{{ url_for("test") }}">COVID-19 Test</a></li>
+
+
+                    <li><a href="{{ url_for('equipment') }}">Equipment</a></li>
+
+                    <li><a href="{{ url_for("contact") }}">Contact Us</a></li>
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
 
 
 <div class="width33 sticky">
-   {# <img src="/static/logo.png">#}
+    {# <img src="/static/logo.png">#}
     <div class="prudent_info">
         <div class="form_title">
             <h5>COVID-19 Test</h5>
@@ -121,7 +120,7 @@
                 <input class="floatlabel" id="pincode" onkeypress="return isNumberKey(event);" type="text"/>
                 <label for="pincode">Pincode</label>
             </div>
-            <div class="input_container select_field">
+            <div class="input_container select_field" style="width: 96%;margin-bottom: 1px;">
                 <select class="floatlabel" id="test_type">
                     <option value=""></option>
                     <option value="Anti-DARS(antibody)">Anti-DARS(antibody)</option>
@@ -130,6 +129,58 @@
 
                 </select>
                 <label for="companyRole">Testing Type</label>
+                <svg data-toggle="modal" data-target="#exampleModal"
+                     style="position: relative; margin-left:101%; bottom: 35px; margin-right: 5px;  width: 25px"
+                     xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 24 24" width="24px" height="24px">
+                    <path d="M 12 0 C 5.371094 0 0 5.371094 0 12 C 0 18.628906 5.371094 24 12 24 C 18.628906 24 24 18.628906 24 12 C 24 5.371094 18.628906 0 12 0 Z M 12 2 C 17.523438 2 22 6.476563 22 12 C 22 17.523438 17.523438 22 12 22 C 6.476563 22 2 17.523438 2 12 C 2 6.476563 6.476563 2 12 2 Z M 12 5.8125 C 11.816406 5.8125 11.664063 5.808594 11.5 5.84375 C 11.335938 5.878906 11.183594 5.96875 11.0625 6.0625 C 10.941406 6.15625 10.851563 6.285156 10.78125 6.4375 C 10.710938 6.589844 10.6875 6.769531 10.6875 7 C 10.6875 7.226563 10.710938 7.40625 10.78125 7.5625 C 10.851563 7.71875 10.941406 7.84375 11.0625 7.9375 C 11.183594 8.03125 11.335938 8.085938 11.5 8.125 C 11.664063 8.164063 11.816406 8.1875 12 8.1875 C 12.179688 8.1875 12.371094 8.164063 12.53125 8.125 C 12.691406 8.085938 12.816406 8.03125 12.9375 7.9375 C 13.058594 7.84375 13.148438 7.71875 13.21875 7.5625 C 13.289063 7.410156 13.34375 7.226563 13.34375 7 C 13.34375 6.769531 13.289063 6.589844 13.21875 6.4375 C 13.148438 6.285156 13.058594 6.15625 12.9375 6.0625 C 12.816406 5.96875 12.691406 5.878906 12.53125 5.84375 C 12.371094 5.808594 12.179688 5.8125 12 5.8125 Z M 10.78125 9.15625 L 10.78125 18.125 L 13.21875 18.125 L 13.21875 9.15625 Z"></path>
+                </svg>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">COVID Testing Types</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p style="text-decoration: underline"> 1.RT-PCR టెస్ట్ :</p> ఈ పరీక్ష ని మీ ముక్కు లేదా
+                            గొంతులోని స్వాబ్ తీసి పరీక్షిస్తారు. ఫలితం
+                            రావడానికి 2-3 రోజులు పడుతుంది. ఈ పరీక్షలో పాజిటివ్ వస్తే 100% పాజిటివ్ అనే అర్ధం. నెగిటివ్
+                            వస్తే 99% నెగిటివ్ అని అర్ధం<br>
+
+                            This test is done by swabbing your nose or throat. It takes 2-3 days for the result to come.
+                            A positive on this test means 100% positive. Negative means 99% negative.<br><br>
+
+
+                            <p style="text-decoration: underline">2. Rapid - Antigen టెస్ట్ :</p> ఈ పరీక్ష కూడా స్వాబ్
+                            ద్వారానే పరీక్షస్తారు. కానీ ఫలితం 15
+                            నిమిషాల్లో తెలుస్తుంది. ఈ పరీక్షలో పాజిటివ్ వస్తే 100% పాజిటివ్ అనే అర్ధం. నెగిటివ్ వచ్చి,
+                            కోవిడ్ లక్షణాలు తగ్గకపోతే తప్పకుండా RT-PCR టెస్ట్ చేయించుకోవాలి<br>
+
+
+                            This test is also tested by Swab. But the result will be known in 15 minutes. A positive on
+                            this test means 100% positive. Be sure to get an RT-PCR test if the negative comes and the
+                            COVID symptoms do not go down.<br><br>
+
+                            <p style="text-decoration: underline">3. Anti Body టెస్ట్ :</p> ఈ పరీక్ష ని రక్త నమూనాలను
+                            సేకరించి చేయడం జరుగుతుంది. ఫలితం ఒక రోజు లోపే
+                            వస్తుంది. దీని ద్వారా వచ్చే ఫలితం సరి అయినది కాదు. కావున క్రియాశీల COVID ని నిర్ధారించడానికి
+                            యాంటీబాడీ పరీక్షను ఎప్పుడూ చేయించుకోకండి.<br>
+
+                            This test is done by collecting blood samples. The result will come in less than a day. The
+                            result is not correct. Therefore, never perform an antibody test to confirm active
+                            COVID.<br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="input_container select_field">
                 <select class="floatlabel" id="no_ofpatients">
@@ -162,14 +213,19 @@
 
         </div>
         <div id="Enq_My" style="display: none;">
-            <p>Our sincere apologies, currently we are constrained to serving individual requirements in Hyderabad and Secundrabad regions only. Please feel
-                free to <a href="#contact" style="font-weight: bolder">Contact Us</a>. We always appreciate your support.</p>
+            <p>Our sincere apologies, currently we are constrained to serving individual requirements in Hyderabad and
+                Secundrabad regions only. Please feel
+                free to <a href="#contact" style="font-weight: bolder">Contact Us</a>. We always appreciate your
+                support.</p>
 
         </div>
-        </div></div>
+    </div>
+</div>
 
 
-
+<div class='covid_img'>
+    <img src="/static/covid.png" alt="lol">
+</div>
 <div class="text_ppe">
     <h2>Protective Equipments For COVID Patients</h2>
 </div>
@@ -180,10 +236,11 @@
             <div class="card__image card__image--1"></div>
             <div class="card__content">
                 <div class="card__title">CPAP Machines</div>
-                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                <p class="card__text">This defines the ability for a flex item to grow if
                     necessary. It accepts a
                     unitless value that serves as a proportion. It dictates what amount of the available space inside
                     the flex container the item should take up.</p>
+                <a class="" href="#contact">
                     <center>Contact us</center>
                 </a>
             </div>
@@ -194,10 +251,11 @@
             <div class="card__image card__image--2"></div>
             <div class="card__content">
                 <div class="card__title">Air Beds</div>
-                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                <p class="card__text">This defines the ability for a flex item to grow if
                     necessary. It accepts a
                     unitless value that serves as a proportion. It dictates what amount of the available space inside
                     the flex container the item should take up.</p>
+                <a class="" href="#contact">
                     <center>Contact us</center>
                 </a>
             </div>
@@ -208,10 +266,11 @@
             <div class="card__image card__image--3"></div>
             <div class="card__content">
                 <div class="card__title">Medical Oxygen Concentrator</div>
-                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                <p class="card__text">This defines the ability for a flex item to grow if
                     necessary. It accepts a
                     unitless value that serves as a proportion. It dictates what amount of the available space inside
                     the flex container the item should take up.</p>
+                <a class="" href="#contact">
                     <center>Contact us</center>
                 </a>
             </div>
@@ -222,10 +281,11 @@
             <div class="card__image card__image--4"></div>
             <div class="card__content">
                 <div class="card__title">Hand Held Pulse Oximeter</div>
-                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                <p class="card__text">This defines the ability for a flex item to grow if
                     necessary. It accepts a
                     unitless value that serves as a proportion. It dictates what amount of the available space inside
                     the flex container the item should take up.</p>
+                <a class="" href="#contact">
                     <center>Contact us</center>
                 </a>
             </div>
@@ -236,10 +296,11 @@
             <div class="card__image card__image--5"></div>
             <div class="card__content">
                 <div class="card__title">Nebulizer</div>
-                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                <p class="card__text">This defines the ability for a flex item to grow if
                     necessary. It accepts a
                     unitless value that serves as a proportion. It dictates what amount of the available space inside
                     the flex container the item should take up.</p>
+                <a class="" href="#contact">
                     <center>Contact us</center>
                 </a>
             </div>
@@ -250,10 +311,11 @@
             <div class="card__image card__image--6"></div>
             <div class="card__content">
                 <div class="card__title">Pluse Oximeter</div>
-                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                <p class="card__text">This defines the ability for a flex item to grow if
                     necessary. It accepts a
                     unitless value that serves as a proportion. It dictates what amount of the available space inside
                     the flex container the item should take up.</p>
+                <a class="" href="#contact">
                     <center>Contact us</center>
                 </a>
             </div>
@@ -264,10 +326,11 @@
             <div class="card__image card__image--7"></div>
             <div class="card__content">
                 <div class="card__title">BIPAP</div>
-                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                <p class="card__text">This defines the ability for a flex item to grow if
                     necessary. It accepts a
                     unitless value that serves as a proportion. It dictates what amount of the available space inside
                     the flex container the item should take up.</p>
+                <a class="" href="#contact">
                     <center>Contact us</center>
                 </a>
             </div>
@@ -278,10 +341,11 @@
             <div class="card__image card__image--8"></div>
             <div class="card__content">
                 <div class="card__title">Flex Basis</div>
-                <a class="" href="#contact"><p class="card__text">This defines the ability for a flex item to grow if
+                <p class="card__text">This defines the ability for a flex item to grow if
                     necessary. It accepts a
                     unitless value that serves as a proportion. It dictates what amount of the available space inside
                     the flex container the item should take up.</p>
+                <a class="" href="#contact">
                     <center>Contact us</center>
                 </a>
             </div>
@@ -377,7 +441,6 @@
     else window.addEventListener('load', cb);
 </script>
 #}
-
 
 
 </body>

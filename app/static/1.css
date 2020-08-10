@@ -6,13 +6,22 @@ html {
     width: 100%;
     font-family: verdana;
     scroll-behavior: smooth;
+    background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);
+    background-repeat: no-repeat;
 
 }
+
 @font-face {
     font-family: verdana;
     src: url(Verdana.ttf);
 
 }
+
+.modal-dialog {
+
+    margin-top: 5%;
+}
+
 *,
 :after,
 :before,
@@ -69,10 +78,19 @@ html {
     margin-bottom: 2vh;
 }
 
-.text_ppe h2{
+.text_ppe h2 {
     font-weight: 600;
     font-size: 1.5em;
     text-align: center;
+}
+
+.covid_img img {
+    position: relative;
+    left: 50%;
+    top: 25%;
+    margin-bottom: 10vh;
+    margin-top: 5%;
+    width: 50%;
 }
 
 .about-section {
@@ -316,7 +334,10 @@ html {
     }
 
 
+    .modal-dialog {
 
+        margin-top: 10%;
+    }
 
 
 }
@@ -371,18 +392,22 @@ html {
 
     }
 
-    .text_ppe{
+    .text_ppe {
         text-align: center;
         margin-left: 0vw;
         margin-right: 0vw;
         font-weight: 600;
         font-size: 1em;
         margin-bottom: 2vh;
+    }
+
+    .covid_img img {
+        display: none;
+    }
+
+
 }
 
-
-
-}
 @media (min-width: 40rem) {
     .card__image::before {
         padding-top: 66.6%;

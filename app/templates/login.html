@@ -83,7 +83,8 @@
                     data-callback='sendotp' onclick=" return sendotp()">Get Otp
             </button>
 
-            <input type="text" style="display: none" id="otpcontainer" name="password" placeholder="Enter OTP">
+            <input type="text" style="display: none" id="otpcontainer" name="password" maxlength="6"
+                   onkeypress="return isNumberKey(event);" placeholder="Enter OTP">
             <a id="resendotp" onclick="return resendotp()" style="left: 90%; position: relative;display: none">Resend
                 OTP</a>
             <button style="display: none" id="submitform" name="send" onclick=" return submit()">Confirm</button>

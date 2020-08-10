@@ -65,20 +65,23 @@ def getotp(otp_entered=None):
         if (captcha.json()['success']) is True and (captcha.json()['score']) >= 0.3:
             try:
                 if 1 == 1:
-                    # r = requests.post("https://api.mailgun.net/v3/wahhealthcare.com/messages",
-                    #
-                    #                   auth=("api", "key-179896d154b2bdb3c6b6d0201268f295"),
-                    #                   data={"from": "Prudent <noreply@wahhealthcare.tech>",
-                    #                         "to": [email],
-                    #                         "subject": "OTP ",
-                    #                         "template": "otp",
-                    #
-                    #                         "h:X-Mailgun-Variables": json.dumps({"test": sentotp})},
-                    #                   timeout=1.5
-                    #                   )
-                    #
-                    # if r.status_code == 200:
-                    return '1'
+                    r = requests.post("https://api.mailgun.net/v3/support.prudenthealth.in/messages",
+
+                                      auth=("api", "key-179896d154b2bdb3c6b6d0201268f295"),
+                                      data={"from": "Prudent<noreply@support.prudenthealth.in>",
+                                            "to": [email],
+                                            "subject": "One Time Password (OTP) for your online transaction at Prudent",
+                                            "template": "otp",
+
+                                            "h:X-Mailgun-Variables": json.dumps({"otp": sentotp}),
+                                            "h:Reply-To": "sales@prudenthealth.in",
+                                            },
+                                      timeout=1.5
+
+                                      )
+
+                    if r.status_code == 200:
+                        return '1'
 
             except requests.Timeout:
                 return '0'
@@ -101,16 +104,19 @@ def resendotp(otp_entered=None):
         print(email)
 
         try:
-            r = requests.post("https://api.mailgun.net/v3/wahhealthcare.com/messages",
+            r = requests.post("https://api.mailgun.net/v3/support.prudenthealth.in/messages",
 
                               auth=("api", "key-179896d154b2bdb3c6b6d0201268f295"),
-                              data={"from": "Prudent <noreply@wahhealthcare.tech>",
+                              data={"from": "Prudent<noreply@support.prudenthealth.in>",
                                     "to": [email],
-                                    "subject": "OTP ",
+                                    "subject": "One Time Password (OTP) for your online transaction at Prudent",
                                     "template": "otp",
 
-                                    "h:X-Mailgun-Variables": json.dumps({"test": sendotp})},
+                                    "h:X-Mailgun-Variables": json.dumps({"otp": sendotp}),
+                                    "h:Reply-To": "sales@prudenthealth.in",
+                                    },
                               timeout=1.5
+
                               )
 
             if r.status_code == 200:
